@@ -1,0 +1,5 @@
+*.jar
+*.class
+part-r-00000
+.*
+!.gitignore
