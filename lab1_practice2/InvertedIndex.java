@@ -16,8 +16,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 /*
 Author: 107522112 Sid Lin
 Description: There are 3 function will be implemented, mapper, combiner and reducer.
-FilePath: user/s107522115/lab1/practice2/output1
-Output
+Test Result: user/s107522115/lab1/practice2/output
+Definition of funcion
   mapper   => (word:fileName, 1)
   combiner => (word, fileName:frequency)
   reducer  => (word, fileName_1:Frequency_1...fileName_n:Frequency_n)
@@ -78,7 +78,7 @@ public class InvertedIndex {
       StringBuffer buffer = new StringBuffer();
 
       for (Text value : values) {
-        buffer.append(String.format("%s:", value));
+        buffer.append(String.format("%s;", value));
       }
       result.set(buffer.toString());
       context.write(key, result);
