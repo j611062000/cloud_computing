@@ -9,3 +9,4 @@ hbase putDataToHBaseTable $table warmpc HD PRICE 11800
 hbase putDataToHBaseTable $table warmpc RAM BRAND GSKILL
 hbase putDataToHBaseTable $table warmpc RAM ITEM F4-3200C14Q-32GTZRX
 hbase putDataToHBaseTable $table warmpc RAM PRICE 15990
+hbase putDataToHBaseTable $table warmpc SID PRICE 15990

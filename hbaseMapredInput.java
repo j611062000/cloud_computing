@@ -55,40 +55,26 @@ public class hbaseMapredInput {
     public static class hbaseMapredInputReducer extends TableReducer<Text, MapWritable, NullWritable> {
         public void reduce(Text key, Iterable<MapWritable> values, Context context)
                 throws IOException, InterruptedException {
-            
+
             Configuration config = HBaseConfiguration.create();
             config.set("hbase.zookeeper.quorum", "hadoop-slave1,hadoop-slave2,hadoop-slave3,hadoop-master");
             config.set("zookeeper.znode.parent", "/hbase-unsecure");
             Connection connection = ConnectionFactory.createConnection(config);
-            TableName tableName = TableName.valueOf("s107522115");
-            Table table = connection.getTable(tableName);
             Admin admin = connection.getAdmin();
+            String tbName = context.getConfiguration().get("table.name")
+            TableName tableName = TableName.valueOf(context.getConfiguration().get("table.name"));
 
             for (MapWritable valueObject : values) {
                 String family = valueObject.get(new Text("family")).toString();
                 String qualifier = valueObject.get(new Text("qualifier")).toString();
                 String value = valueObject.get(new Text("value")).toString();
 
-                // check if column family exists
-                boolean exists = false;
-                for (HColumnDescriptor familyDescriptor : table.getTableDescriptor().getFamilies()) {
-                    if(Bytes.toString(familyDescriptor.getName()).equals(family)) {
-                        exists = true;
-                        break; // do nothing
-                    }
-                }
-                System.out.println("Sid___"+exists);
-
-                if(!exists) {
-                    admin.disableTable(tableName);
-                    admin.addColumn(tableName, new HColumnDescriptor(family));
-                    admin.enableTable(tableName);
-                }
+               
                 try {
                     Put put = new Put(Bytes.toBytes(key.toString()));
                     put.addColumn(Bytes.toBytes(family), Bytes.toBytes(qualifier), Bytes.toBytes(value));
                     context.write(NullWritable.get(), put);
-                } catch {
+                } catch(Exception e) {
                     admin.disableTable(tableName);
                     admin.addColumn(tableName, new HColumnDescriptor(family));
                     admin.enableTable(tableName);
@@ -117,6 +103,7 @@ public class hbaseMapredInput {
         config.set(TableOutputFormat.OUTPUT_TABLE, tablename);
         config.set("hbase.zookeeper.quorum", "hadoop-slave1,hadoop-slave2,hadoop-slave3,hadoop-master");
         config.set("zookeeper.znode.parent", "/hbase-unsecure");
+        config.set("table.name", tablename);
 
         Job job = Job.getInstance(config);
         job.setJobName("hbaseMapredInput_" + username);

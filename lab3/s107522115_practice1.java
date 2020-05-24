@@ -30,7 +30,7 @@ public class s107522115_practice1 {
 
         } catch (Exception e) {
             System.out.println("The column family you're trying to put does not exist.\n");
-            System.out.println("We're adding the column family --> "+family);
+            System.out.println("We're adding the column family --> "+args[2]);
 
             Admin admin = connection.getAdmin();
             
