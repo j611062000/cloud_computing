@@ -6,7 +6,7 @@ import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.regionserver.NoSuchColumnFamilyException;
 
-public class putDataToHBaseTable {
+public class s107522115_practice1 {
     public static void main(String[] args) throws Exception {
         if (args.length != 5) {
             System.out.println("Arguments: [TableName] [Row] [Family] [Qualifier] [Value]");
