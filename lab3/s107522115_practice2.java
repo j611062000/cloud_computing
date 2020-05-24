@@ -22,7 +22,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 
 
-public class hbaseMapredInput {
+public class s107522115_practice2 {
     public static class hbaseMapredInputMapper extends Mapper<LongWritable, Text, Text, MapWritable> {
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString());
